@@ -7,6 +7,7 @@ interface Article {
     title: string;
     description: string;
     content: string;
+    slug: string;
     image: string;
     date: string;
 }
@@ -21,8 +22,9 @@ try {
             title: article[1],
             description: article[2],
             content: article[3],
-            image: article[4],
-            date: article[5]
+            slug: article[4],
+            image: article[5],
+            date: article[6]
         }));
     } else {
         console.error('Failed to fetch articles:', response.statusText);
@@ -46,18 +48,18 @@ try {
         <div id="top-wrapper">
             <div id="top-content-container">
                 <div id="headline-article-container"> <!-- TODO: Possibly change name to something less braindead -->
-                    <HeadlineArticle id={articles[0].id} title={articles[0].title} description={articles[0].description} image={articles[0].image}/>
+                    <HeadlineArticle slug={articles[0].slug} title={articles[0].title} description={articles[0].description} image={articles[0].image}/>
                 </div>
                 <div id="side-article-container">
                     {articles.slice(1, 4).map((article) => (
-                        <Article id={article.id} title={article.title} description={article.description} image={article.image} />
+                        <Article slug={article.slug} title={article.title} description={article.description} image={article.image} />
                     ))}
                 </div>
             </div>
         </div>
         <div id="archive-content-container">
             {articles.slice(4).map((article) => (
-                <Article id={article.id} title={article.title} description={article.description} image={article.image} />
+                <Article slug={article.slug} title={article.title} description={article.description} image={article.image} />
             ))}
         </div>
     </body>

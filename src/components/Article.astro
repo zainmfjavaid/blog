@@ -1,16 +1,16 @@
 ---
 interface Props {
-    id: number;
+    slug: string;
 	title: string;
     description: string;
     image: string;
 }
 
-let { id, title, description, image } = Astro.props;
+let { slug, title, description, image } = Astro.props;
 image = 'http://localhost:5000/' + image;
 ---
 
-<a href={`/posts?id=${id}`}>
+<a href={`/posts?post=${slug}`}>
     <div class="article-container">
         <div>
             <img src={image} class="article-image" />
