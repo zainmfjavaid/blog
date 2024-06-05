@@ -1,0 +1,62 @@
+---
+interface Props {
+    id: number;
+	title: string;
+    description: string;
+    image: string;
+}
+
+let { id, title, description, image } = Astro.props;
+image = 'http://localhost:5000/' + image;
+---
+
+<a href={`/posts?id=${id}`}>
+    <div class="article-container">
+        <div>
+            <img src={image} class="article-image" />
+        </div>
+        <div>
+            <p class="article-title">{title}</p>
+            <p class="article-description">{description}</p>
+        </div>
+    </div>
+</a>
+
+<style>
+    a {
+        all: unset;
+    }
+
+    a:hover {
+        transition: all 0.15s ease;
+        color: #5badf0;
+        cursor: pointer;
+    }
+
+    .article-container {
+        display: flex;
+        flex-direction: column;
+        column-gap: 15px;
+        width: 540px;
+        background-color: rgb(255, 255, 255);
+        font-family: system-ui, sans-serif;
+        padding: 10px 10px;
+    }
+
+    .article-image {
+        width: 540px;
+        height: 360px;
+    }
+
+    .article-title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .article-description {
+        font-weight: 400;
+        color: #aaa;
+        font-size: 18px;
+        margin-top: -8px;
+    }
+</style>

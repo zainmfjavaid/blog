@@ -1,5 +1,6 @@
 ---
 import Article from '../components/Article.astro'
+import HeadlineArticle from '../components/HeadlineArticle.astro';
 
 interface Article {
     id: number;
@@ -37,32 +38,54 @@ try {
         <meta charset="UTF-8" />
         <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" type="image/png" href="/logo.png" />
         <meta name="generator" content={Astro.generator} />
         <title>Zain Blog</title>
     </head>
     <body>
-		<div id="content-container">
-			<div id="article-container">
-				{articles.map((article) => (
-					<Article id={article.id} title={article.title} description={article.description} image={article.image} />
-				))}
-			</div>
-		</div>
+        <div id="top-wrapper">
+            <div id="top-content-container">
+                <div id="headline-article-container"> <!-- TODO: Possibly change name to something less braindead -->
+                    <HeadlineArticle id={articles[0].id} title={articles[0].title} description={articles[0].description} image={articles[0].image}/>
+                </div>
+                <div id="side-article-container">
+                    {articles.slice(1, 4).map((article) => (
+                        <Article id={article.id} title={article.title} description={article.description} image={article.image} />
+                    ))}
+                </div>
+            </div>
+        </div>
+        <div id="archive-content-container">
+            {articles.slice(4).map((article) => (
+                <Article id={article.id} title={article.title} description={article.description} image={article.image} />
+            ))}
+        </div>
     </body>
 </html>
 
 <style is:global>
-    #content-container {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		top: 120px;
-	}
+    #top-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 120px 0 50px 0;
+    }
 
-	#article-container {
+    #top-content-container {
+        display: flex;
+        flex-direction: row;
+        column-gap: 25px;
+    }
+
+	#side-article-container {
 		display: flex;
 		flex-direction: column;
 		row-gap: 10px;
 	}
+
+    #archive-content-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+    }
 </style>

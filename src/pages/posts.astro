@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar.astro';
         <meta charset="UTF-8" />
         <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" type="image/png" href="/logo.png" />
         <meta name="generator" content={Astro.generator} />
         <title id="page-title">Loading...</title>
     </head>
@@ -17,10 +17,12 @@ import Navbar from '../components/Navbar.astro';
         <Navbar />
         <div class="article-container">
             <div class="title-container">
-                <h1 id="article-title">Loading...</h1>
+                <div style="width: 80%">
+                    <h1 id="article-title">Loading...</h1>
+                </div>
             </div>
             <div class="info-container">
-                <img id="article-image" src="/favicon.png" class="article-image" style="display: none;" />
+                <img id="article-image" src="/logo.png" class="article-image" style="display: none;" />
                 <div style="margin-top: -35px;">
                     <p id="article-description" class="article-description">Loading...</p>
                     <div class="author-credits">
