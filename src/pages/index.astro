@@ -47,7 +47,7 @@ try {
     <body>
         <div id="top-wrapper">
             <div id="top-content-container">
-                <div id="headline-article-container"> <!-- TODO: Possibly change name to something less braindead -->
+                <div id="headline-article-container">
                     <HeadlineArticle slug={articles[0].slug} title={articles[0].title} description={articles[0].description} image={articles[0].image}/>
                 </div>
                 <div id="side-article-container">
@@ -62,6 +62,17 @@ try {
                 <Article slug={article.slug} title={article.title} description={article.description} image={article.image} />
             ))}
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                fetch(`http://localhost:5000/analytics/new-page-view/home`)
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('Failed to record page view:', response.statusText);
+                        }
+                    })
+                    .catch(error => console.error('Error in recording page view:', error));
+            });
+        </script>
     </body>
 </html>
 

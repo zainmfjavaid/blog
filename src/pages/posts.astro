@@ -67,6 +67,14 @@ import Navbar from '../components/Navbar.astro';
                                 document.getElementById('article-image').src = `http://localhost:5000/${article.image_source}`;
                                 document.getElementById('article-image').style.display = "inline-block";
                                 document.getElementById('content').innerHTML = article.content.replace(/\r\n|\n/g, '<br>');
+
+                                fetch(`http://localhost:5000/analytics/new-article-view/${article.slug}`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            console.error('Failed to record article view:', response.statusText);
+                                        }
+                                    })
+                                    .catch(error => console.error('Error in recording article view:', error));
                             } else {
                                 console.error('Article not found.');
                             }
