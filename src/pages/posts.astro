@@ -56,9 +56,10 @@ import Navbar from '../components/Navbar.astro';
                                     title: articleData[1],
                                     description: articleData[2],
                                     content: articleData[3],
-                                    slug: articleData[4],
-                                    image_source: articleData[5],
-                                    date: articleData[6]
+                                    tags: articleData[4],
+                                    slug: articleData[5],
+                                    image_source: articleData[6],
+                                    date: articleData[7]
                                 };
 
                                 document.getElementById('page-title').textContent = article.title;

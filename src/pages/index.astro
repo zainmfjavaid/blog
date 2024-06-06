@@ -22,9 +22,10 @@ try {
             title: article[1],
             description: article[2],
             content: article[3],
-            slug: article[4],
-            image: article[5],
-            date: article[6]
+            tags: article[4],
+            slug: article[5],
+            image: article[6],
+            date: article[7]
         }));
     } else {
         console.error('Failed to fetch articles:', response.statusText);
