@@ -30,6 +30,7 @@ import Navbar from '../components/Navbar.astro';
                     </div>
                 </div>
             </div>
+            <p id="image-credits" class="image-credits">Image Credits: Loading...</p>
             <div class="content-container">
                 <p id="content"></p>
             </div>
@@ -59,7 +60,8 @@ import Navbar from '../components/Navbar.astro';
                                     tags: articleData[4],
                                     slug: articleData[5],
                                     image_source: articleData[6],
-                                    date: articleData[7]
+                                    credits: articleData[7],
+                                    date: articleData[8]
                                 };
 
                                 document.getElementById('page-title').textContent = article.title;
@@ -67,6 +69,7 @@ import Navbar from '../components/Navbar.astro';
                                 document.getElementById('article-description').textContent = article.description;
                                 document.getElementById('article-image').src = `http://localhost:5000/${article.image_source}`;
                                 document.getElementById('article-image').style.display = "inline-block";
+                                document.getElementById('image-credits').textContent = `Image Credits: ${article.credits}`;
                                 document.getElementById('content').innerHTML = article.content.replace(/\r\n|\n/g, '<br>');
 
                                 fetch(`http://localhost:5000/analytics/new-article-view/${article.slug}`)
@@ -157,9 +160,15 @@ import Navbar from '../components/Navbar.astro';
         font-size: 16px;
     }
 
+    .image-credits {
+        font-size: 14px;
+        font-weight: 500;
+        color: gray;
+    }
+
     .content-container {
         position: absolute;
-        margin-top: 35px;
+        margin-top: 15px;
         font-size: 18px;
         line-height: 1.3;
         width: 75%;
