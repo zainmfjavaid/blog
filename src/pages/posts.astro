@@ -12,6 +12,7 @@ import Navbar from '../components/Navbar.astro';
         <link rel="icon" type="image/png" href="/logo.png" />
         <meta name="generator" content={Astro.generator} />
         <title id="page-title">Loading...</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
     </head>
     <body>
         <Navbar />
@@ -70,7 +71,14 @@ import Navbar from '../components/Navbar.astro';
                                 document.getElementById('article-image').src = `http://localhost:5000/${article.image_source}`;
                                 document.getElementById('article-image').style.display = "inline-block";
                                 document.getElementById('image-credits').textContent = `Image Credits: ${article.credits}`;
-                                document.getElementById('content').innerHTML = article.content.replace(/\r\n|\n/g, '<br>');
+                                document.getElementById('content').innerHTML = article.content.replace(/\r\n|\r|\n/g, '<br>');
+
+                                const codeBlocks = document.querySelectorAll('code');
+                                codeBlocks.forEach(block => {
+                                    block.innerHTML = block.innerHTML.replace(/<br\s*\/?>/gi, '\n').trim('\n');                                    
+                                });
+
+                                Prism.highlightAll();
 
                                 fetch(`http://localhost:5000/analytics/new-article-view/${article.slug}`)
                                     .then(response => {
@@ -93,6 +101,8 @@ import Navbar from '../components/Navbar.astro';
                 }
             });
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js" defer></script>
     </body>
 </html>
 
@@ -105,17 +115,6 @@ import Navbar from '../components/Navbar.astro';
         padding: 0;
     }
 
-    code {
-        font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-    }
 
     br {
         display: block;
