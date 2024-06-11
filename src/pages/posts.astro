@@ -50,7 +50,7 @@ import Navbar from '../components/Navbar.astro';
 
                 if (post) {
                     try {
-                        const response = await fetch(`http://localhost:5000/get-article/${post}`);
+                        const response = await fetch(`${import.meta.env.PUBLIC_BACKEND_URL}/get-article/${post}`);
                         if (response.ok) {
                             const data = await response.json();
                             const articleData = data.articles[0];
@@ -84,7 +84,7 @@ import Navbar from '../components/Navbar.astro';
 
                                 Prism.highlightAll();
 
-                                fetch(`http://localhost:5000/analytics/new-article-view/${article.slug}`)
+                                fetch(`${import.meta.env.PUBLIC_BACKEND_URL}/analytics/new-article-view/${article.slug}`)
                                     .then(response => {
                                         if (!response.ok) {
                                             console.error('Failed to record article view:', response.statusText);
