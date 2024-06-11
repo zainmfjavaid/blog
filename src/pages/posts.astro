@@ -19,9 +19,7 @@ import Navbar from '../components/Navbar.astro';
         <div class="article-container">
             <div class="title-container">
                 <div style="width: 80%">
-                    <div id="article-tag-container">
-                        <p id="article-tags">Loading...</p>
-                    </div>
+                    <div id="article-tag-container"></div>
                     <h1 id="article-title">Loading...</h1>
                 </div>
             </div>
@@ -68,7 +66,6 @@ import Navbar from '../components/Navbar.astro';
                                     date: articleData[8]
                                 };
 
-                                document.getElementById('article-tags').textContent = article.tags;
                                 document.getElementById('page-title').textContent = article.title;
                                 document.getElementById('article-title').textContent = article.title;
                                 document.getElementById('article-description').textContent = article.description;
@@ -77,6 +74,29 @@ import Navbar from '../components/Navbar.astro';
                                 document.getElementById('image-credits').textContent = `Image Credits: ${article.credits}`;
                                 document.getElementById('content').innerHTML = article.content.replace(/\r\n|\r|\n/g, '<br>');
 
+                                const tagContainer = document.getElementById('article-tag-container');
+                                const tagList = article.tags.split(",");
+
+                                if (tagList.length === 1) {
+                                    tagContainer.style.marginBottom = "-25px";
+                                } else {
+                                    tagContainer.style.marginBottom = "-35px";
+                                }
+
+                                tagList.forEach(tag => {
+                                    const tagElement = document.createElement('a');
+                                    tagElement.innerText = tag;
+                                    tagElement.className = 'article-tag';
+                                    tagElement.href = `/archive?tag=${tag.replace(' ', '-').toLowerCase()}`;
+                                    tagContainer.appendChild(tagElement);
+
+                                    if (tagList[tagList.length - 1] != tag) {
+                                        const slashElement = document.createElement('p');
+                                        slashElement.innerText = '/';
+                                        slashElement.className = 'article-tag-sep';
+                                        tagContainer.appendChild(slashElement);
+                                    }
+                                });
                                 const codeBlocks = document.querySelectorAll('code');
                                 codeBlocks.forEach(block => {
                                     block.innerHTML = block.innerHTML.replace(/<br\s*\/?>/gi, '\n').trim('\n');                                    
@@ -139,7 +159,24 @@ import Navbar from '../components/Navbar.astro';
     }
 
     #article-tag-container {
-        margin-bottom: -12px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 10px;
+        font-size: 15px;
+    }
+
+    .article-tag {
+        all: unset;
+        color: rgb(82 0 255);
+        font-weight: bold;
+    }
+
+    .article-tag:hover {
+        opacity: 0.6;
+        text-decoration: underline;
+        cursor: pointer;
+        color: #FF5733;
     }
 
     #article-title {

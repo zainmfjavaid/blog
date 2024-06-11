@@ -1,0 +1,166 @@
+---
+import Navbar from '../components/Navbar.astro';
+---
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <meta name="generator" content={Astro.generator} />
+        <title id="page-title">Loading...</title>
+    </head>
+    <body>
+        <Navbar />
+        <div id="archive-header">
+            <p style="font-size: 16px; color: rgb(0, 42, 255);">ALL ARTICLES TAGGED:</p>
+            <p id="tag-title">Loading...</p>
+        </div>
+        <div id="content-container"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                function getQueryParams() {
+                    const params = new URLSearchParams(window.location.search);
+                    return Object.fromEntries(params.entries());
+                }
+
+                function formatTag(unformattedTag) {
+                    var formattedTagArray = [];
+                    unformattedTag.split(' ').forEach(tagWord => {
+                        formattedTagArray.push(tagWord[0].toUpperCase() + tagWord.slice(1));
+                    })
+
+                    return formattedTagArray.join();
+                }
+
+                const tag = formatTag(getQueryParams().tag);
+
+                document.getElementById('page-title').textContent = tag + ' - Zain Javaid';
+                document.getElementById('tag-title').textContent = tag;
+
+                const response = await fetch(`${import.meta.env.PUBLIC_BACKEND_URL}/get-articles/${tag}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    const articleData = data.articles;
+
+                    const contentContainer = document.getElementById('content-container');
+                    articleData.forEach(article => {
+                        const title = article[1];
+                        const description = article[2];
+                        const slug = article[5];
+                        const imageSource = `${import.meta.env.PUBLIC_BACKEND_URL}/${article[6]}`;
+
+                        const baseAnchorTag = document.createElement('a');
+                        baseAnchorTag.href = `/posts?post=${slug}`;
+
+                        const articleContainer = document.createElement('div');
+                        articleContainer.className = 'article-container';
+
+                        const imageContainer = document.createElement('div');
+                        const imageTag = document.createElement('img');
+                        imageTag.src = imageSource;
+                        imageTag.className = 'article-image';
+                        imageContainer.appendChild(imageTag);
+
+                        const articleInfoContainer = document.createElement('div');
+                        const articleTitleTag = document.createElement('p');
+                        articleTitleTag.textContent = title;
+                        articleTitleTag.className = 'article-title';
+                        const articleDescriptionTag = document.createElement('p');
+                        articleDescriptionTag.textContent = description;
+                        articleDescriptionTag.className = 'article-description';
+                        articleInfoContainer.appendChild(articleTitleTag);
+                        articleInfoContainer.appendChild(articleDescriptionTag);
+
+                        articleContainer.appendChild(imageContainer);
+                        articleContainer.appendChild(articleInfoContainer);
+                        baseAnchorTag.appendChild(articleContainer);
+                        contentContainer.appendChild(baseAnchorTag);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
+
+<style is:global>
+    html {
+        font-family: system-ui, sans-serif;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fee071;
+        height: 500px;
+    }
+
+    #archive-header {
+        position: absolute;
+        top: 125px;
+        left: 30%;
+        transform: translateX(-70%);
+        display: flex;
+        flex-direction: column;
+    }
+
+    #tag-title {
+        font-weight: 500;
+        font-size: 70px;
+        margin-top: -15px;
+    }
+
+    #content-container {
+        background-color: #131313;
+        width: 100%;
+        margin-top: 300px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        padding: 100px 0;
+        align-items: center;
+    }
+
+    /* Styles to replicate article component */
+    a {
+        all: unset;
+        color: white;
+    }
+
+    a:hover {
+        transition: all 0.15s ease;
+        color: #5badf0;
+        cursor: pointer;
+    }
+
+    .article-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 15px;
+        width: 50vw;
+        padding: 10px 10px;
+    }
+
+    .article-image {
+        width: 150px;
+        height: 100px;
+    }
+
+    .article-title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .article-description {
+        font-weight: 400;
+        color: #aaa;
+        font-size: 18px;
+        margin-top: -8px;
+    }
+</style>
