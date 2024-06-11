@@ -7,7 +7,7 @@ interface Props {
 }
 
 let { slug, title, description, image } = Astro.props;
-image = 'http://localhost:5000/' + image;
+image = `${import.meta.env.PUBLIC_BACKEND_URL}/${image}`;
 ---
 
 <a href={`/posts?post=${slug}`}>

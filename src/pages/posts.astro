@@ -19,6 +19,9 @@ import Navbar from '../components/Navbar.astro';
         <div class="article-container">
             <div class="title-container">
                 <div style="width: 80%">
+                    <div id="article-tag-container">
+                        <p id="article-tags">Loading...</p>
+                    </div>
                     <h1 id="article-title">Loading...</h1>
                 </div>
             </div>
@@ -65,10 +68,11 @@ import Navbar from '../components/Navbar.astro';
                                     date: articleData[8]
                                 };
 
+                                document.getElementById('article-tags').textContent = article.tags;
                                 document.getElementById('page-title').textContent = article.title;
                                 document.getElementById('article-title').textContent = article.title;
                                 document.getElementById('article-description').textContent = article.description;
-                                document.getElementById('article-image').src = `http://localhost:5000/${article.image_source}`;
+                                document.getElementById('article-image').src = `${import.meta.env.PUBLIC_BACKEND_URL}/${article.image_source}`;
                                 document.getElementById('article-image').style.display = "inline-block";
                                 document.getElementById('image-credits').textContent = `Image Credits: ${article.credits}`;
                                 document.getElementById('content').innerHTML = article.content.replace(/\r\n|\r|\n/g, '<br>');
@@ -132,6 +136,10 @@ import Navbar from '../components/Navbar.astro';
     .title-container {
         width: 70vw;
         justify-content: start;
+    }
+
+    #article-tag-container {
+        margin-bottom: -12px;
     }
 
     #article-title {
