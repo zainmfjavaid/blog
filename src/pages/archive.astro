@@ -29,13 +29,13 @@ import Navbar from '../components/Navbar.astro';
                 function formatTag(unformattedTag) {
                     var formattedTagArray = [];
                     unformattedTag.split(' ').forEach(tagWord => {
-                        formattedTagArray.push(tagWord[0].toUpperCase() + tagWord.slice(1));
+                        formattedTagArray.push(tagWord.toUpperCase());
                     })
 
-                    return formattedTagArray.join();
+                    return formattedTagArray.join(' ');
                 }
 
-                const tag = formatTag(getQueryParams().tag);
+                const tag = formatTag(getQueryParams().tag.replaceAll('-', ' '));
 
                 document.getElementById('page-title').textContent = tag + ' - Zain Javaid';
                 document.getElementById('tag-title').textContent = tag;
@@ -103,8 +103,7 @@ import Navbar from '../components/Navbar.astro';
     #archive-header {
         position: absolute;
         top: 125px;
-        left: 30%;
-        transform: translateX(-70%);
+        left: 20%;
         display: flex;
         flex-direction: column;
     }

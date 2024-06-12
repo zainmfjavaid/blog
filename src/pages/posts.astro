@@ -87,7 +87,7 @@ import Navbar from '../components/Navbar.astro';
                                     const tagElement = document.createElement('a');
                                     tagElement.innerText = tag;
                                     tagElement.className = 'article-tag';
-                                    tagElement.href = `/archive?tag=${tag.replace(' ', '-').toLowerCase()}`;
+                                    tagElement.href = `/archive?tag=${tag.replaceAll(' ', '-').toLowerCase()}`;
                                     tagContainer.appendChild(tagElement);
 
                                     if (tagList[tagList.length - 1] != tag) {
