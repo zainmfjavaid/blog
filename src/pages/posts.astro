@@ -139,7 +139,6 @@ import Navbar from '../components/Navbar.astro';
         padding: 0;
     }
 
-
     br {
         display: block;
         content: "";
@@ -166,13 +165,18 @@ import Navbar from '../components/Navbar.astro';
         font-size: 15px;
     }
 
+    a {
+        all: unset;
+        color: rgb(82 0 255);
+    }
+
     .article-tag {
         all: unset;
         color: rgb(82 0 255);
         font-weight: bold;
     }
 
-    .article-tag:hover {
+    a:hover, .article-tag:hover {
         opacity: 0.6;
         text-decoration: underline;
         cursor: pointer;
