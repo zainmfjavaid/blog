@@ -53,7 +53,7 @@ import Navbar from '../components/Navbar.astro';
                         const imageSource = `${import.meta.env.PUBLIC_BACKEND_URL}/${article[6]}`;
 
                         const baseAnchorTag = document.createElement('a');
-                        baseAnchorTag.href = `/posts?post=${slug}`;
+                        baseAnchorTag.href = `/${slug}`;
 
                         const articleContainer = document.createElement('div');
                         articleContainer.className = 'article-container';

@@ -10,7 +10,7 @@ let { slug, title, description, image } = Astro.props;
 image = `${import.meta.env.PUBLIC_BACKEND_URL}/${image}`;
 ---
 
-<a href={`/posts?post=${slug}`}>
+<a href={`/${slug}`}>
     <div class="article-container">
         <div>
             <img src={image} class="article-image" />
